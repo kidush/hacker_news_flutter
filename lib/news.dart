@@ -1,38 +1,24 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
-import 'dart:convert';
-
 
 class News extends StatelessWidget {
   final List _news;
 
- _getNews() async {
-    var url = "https://api.hnpwa.com/v0";
-    var httpClient = new HttpClient();
-
-    String result;  
-    try {
-      var request = await httpClient.getUrl(Uri.parse('$url/news/1.json'));
-      var response = await request.close();
-
-      if (response.statusCode == HttpStatus.OK) {
-        var json = await response.transform(UTF8.decoder).join();
-        var data = JSON.decode(json); 
-
-        result = data;
-      }
-    } catch(exception) {
-      result = "Failed";
-    }
-
-  }
+  News(this._news);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return this._getNews().map((item) {
-      new Text(item.title);
-    });    
+    return new ListView.builder(
+      itemCount: _news == null ? 0 : _news.length,
+      shrinkWrap: true,
+      itemBuilder: (BuildContext context, int index) {
+        return new Card(
+          child: new Padding(
+            padding: new EdgeInsets.all(20.0),
+            child: new Text(_news[index]['title'])
+          )
+        );
+      },
+    );
   }
 
 }
