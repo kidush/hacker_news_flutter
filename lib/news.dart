@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:share/share.dart';
 
 
 class News extends StatelessWidget {
@@ -29,15 +30,28 @@ class News extends StatelessWidget {
                   _news[index]['title'],
                   style: new TextStyle(fontSize: 18.0)
                 ),
-                new FlatButton(
-                  child: new Text('Open Here'),
-                  onPressed: () {
-                    this.goToURL(_news[index]['url']);
-                  },
-                )
+
+                new ButtonBar(
+                  children: <Widget>[
+                    new IconButton(
+                      icon: new Icon(Icons.web),
+                      tooltip: 'Open Here',
+                      onPressed: () {
+                        this.goToURL(_news[index]['url']);
+                      },
+                    ),
+                    new IconButton(
+                      icon: new Icon(Icons.share),
+                      tooltip: 'share',
+                      onPressed: () {
+                        share(_news[index]['url']);
+                      },
+                    ),
+                  ],
+                ),
               ]
             ),
-          )         
+          )
         );
       },
     );
